@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BeforeUnload Save Timestamp</title>
+</head>
+<body>
+  <h1>BeforeUnload Save Timestamp</h1>
+  <p id="lastClosedMessage">Loading...</p>
+
+  <script>
+    // Function to display the last closed timestamp
+    function displayLastClosed() {
+      const lastClosed = localStorage.getItem('lastClosed');
+      const messageElement = document.getElementById('lastClosedMessage');
+
+      if (lastClosed) {
+        messageElement.textContent = `The application was last closed on: ${new Date(lastClosed).toLocaleString()}`;
+      } else {
+        messageElement.textContent = 'This is the first time visiting the application.';
+      }
+    }
+
+    // Event listener for beforeunload
+    window.addEventListener('beforeunload', function () {
+      // Save the current timestamp in localStorage
+      const timestamp = new Date().toISOString();
+      localStorage.setItem('lastClosed', timestamp);
+    });
+
+    // Display the last closed timestamp on page load
+    displayLastClosed();
+  </script>
+</body>
+</html>
